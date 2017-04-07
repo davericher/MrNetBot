@@ -1,0 +1,26 @@
+﻿{
+  "client": {
+    "debug": false,
+    "server": {
+      "address": "chat.freenode.net",
+      "port": 6667,
+      "secure": false
+    },
+    "user": {
+      "username": "MrNetBot",
+      "nickname": "MrNetBot",
+      "realname": "MrNetBot"
+    },
+    "channels": [
+      "#fsociety23"
+    ]
+  },
+  "logging": {
+    "IncludeScopes": "true",
+    "LogLevel": {
+      "Default": "Debug",
+      "System": "Information",
+      "Microsoft": "Information"
+    }
+  }
+}
