@@ -8,27 +8,55 @@ namespace Bot
 {
     internal class Program
     {
+        private static string Enviroment(string[] args)
+        {
+            var builder = new ConfigurationBuilder();
+            var config = builder.AddEnvironmentVariables().AddCommandLine(args).Build();
+            return config["enviroment"] ?? "dev";
+
+        }
+
+        private static IConfigurationBuilder BuildConfiguration(string[] args)
+        {
+            var enviroment = Enviroment(args);
+            return new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile(
+                    Path.Combine(
+                        "Data", $"{enviroment}.config.json"
+                    ), optional: false, reloadOnChange: true)
+                .AddEnvironmentVariables(enviroment)
+                .AddCommandLine(args);
+        }
+
         private static void Main(string[] args)
         {
-            var exePath = Process.GetCurrentProcess().MainModule.FileName;
+            // Enviroment Information
+            var exePath = Process.GetCurrentProcess().MainModule.FileName;            
             var directoryPath = Path.GetDirectoryName(exePath);
+            var host = new WebHostBuilder();
+          
+            // Create the Configuration Keystore
+            var builder = BuildConfiguration(args);
 
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile(Path.Combine("Data", "config.json"), false, false)
-                .AddEnvironmentVariables()
-                .AddCommandLine(args);
+            // Build the Configuration Object
+            var config = builder.Build();
 
+            // Grab a Listen of Web URLS to Listen on
+            var urls = config.GetSection("web:urls").Get<string[]>() ?? new []{"http://localhost:5050"};
 
-            var host = new WebHostBuilder()
+            // Finish Building Host
+            host
                 .UseContentRoot(directoryPath)
                 .UseKestrel()
                 .UseStartup<Startup>()
-                .UseUrls("http://127.0.0.1:9090")
-                .ConfigureServices( services => services.AddSingleton(builder.Build()))
-                .Build();
+                .UseUrls(urls)
+                .UseConfiguration(config)
+                .ConfigureServices( services => services.AddSingleton(config))
+                .Build()
+                .Run();
 
-            host.Run();
         }
+
     }
 }

@@ -22,7 +22,7 @@ namespace Client
             IrcClient = new StandardIrcClient
             {
                 TextEncoding = Encoding.UTF8,
-                FloodPreventer = new IrcStandardFloodPreventer(20, 10)
+                FloodPreventer = new IrcStandardFloodPreventer(20, 2000)
             };
         }
 
