@@ -15,6 +15,7 @@ namespace Bot
 
         public void ConfigureServices(IServiceCollection services)
         {
+            // SQL Connection String
             services
                 .AddLogging()
                 .AddSingleton<IRC.Client>();

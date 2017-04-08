@@ -1,7 +1,7 @@
 ﻿{
   "web": {
     "urls": [
-      "http://127.0.0.1:9091"
+      "http://127.0.0.1:9093"
     ]
   },
   "client": {
@@ -20,7 +20,7 @@
       "#fsociety23"
     ]
   },
-  "database": {
-    "connection": "server=localhost;userid=root;pwd=;port=3305;database=sakila;sslmode=none;" 
-  } 
+  "ConnectionStrings": {
+    "bot": "server=192.168.1.3;userid=mrnetbot;pwd=mrnetbot;port=3305;database=mrnetbot;sslmode=none;"
+  }
 }
