@@ -20,12 +20,7 @@
       "#fsociety23"
     ]
   },
-  "logging": {
-    "IncludeScopes": "true",
-    "LogLevel": {
-      "Default": "Debug",
-      "System": "Information",
-      "Microsoft": "Information"
-    }
-  }
+  "database": {
+    "connection": "server=localhost;userid=root;pwd=;port=3305;database=sakila;sslmode=none;" 
+  } 
 }
